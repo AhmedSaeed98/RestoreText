@@ -3,4 +3,5 @@
  
  **Example
  > input = 'ilikebooks'
- >> output should be: "i like books"
+ 
+ >output should be: "i like books"
