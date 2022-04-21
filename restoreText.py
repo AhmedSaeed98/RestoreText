@@ -1,44 +1,51 @@
-#input="ilikebooks" // "intheshop"
+#input="ilikebooks" // "intheshop" // "ineedashoppingcart" 
 #output="i like books"
-
-
+  
+result = ""
+prevValidSentence = ""
+text = 'ineedashoppingcart'
+ 
 """
-    isValid a function gets a text and validate wether it is found in our keys or not
+    isValid a function gets a text and validate wether it is found in list of keys or not
 """
 def isValid(text):
-    keys = ['i','like','books','in','the','shop']
+    keys = ['i','like','books','in','the','shop','need','shopping','cart','a','shop','ping']
     if text in keys:
         return 1
     else:
         return 0
-
+ 
 """
-    restore is the main function that finds all possible keys and the valid key the desired output string
+    restore is the main function that finds all possible solutions and validate the the correct solution 
 """
-def restore(text):
-    output = ""
-    next = 0
-    for i in range(len(text)):
-        #move to the next keyword directly
-        if i < next:
-            continue
-        #define a list to hold a tuple of all found possible keys
-        list = [('',0)]
-
-        #get all possible keys from current index
-        for j in range(i+1,len(text)+1):
-            if isValid(text[i:j]) and text[i:j] not in list:
-                list.append((text[i:j],str(j)))
-
-        #add the last and longest found key starting from indext i to the main desired output text
-        output = output + list[-1][0] + " "
-        next = int(list[-1][1])
-                
-    return output
-
+def restore(idx, cur_word):
+    global prevValidSentence
+    global result
+ 
+    #base case when i reach the end  of the input string // complete the solution and stop recursing 
+    if(idx >= len(text)):
+        if(isValid(cur_word)):
+            result = prevValidSentence + " " + cur_word
+            
+        return
+ 
+    cur_word += text[idx]
+ 
+    if(isValid(cur_word)):
+        prevSentence = prevValidSentence
+        prevValidSentence = prevValidSentence + " " + cur_word
+        #complete the current solution
+        restore(idx + 1, "")
+ 
+        prevValidSentence = prevSentence
+    
+    restore(idx + 1, cur_word)
+ 
+ 
+ 
 def main():
-    text = 'ilikebooks'
-    print(restore(text))
+    restore(0, "")
+    print(result)
 
 if __name__ == "__main__":
     main()
