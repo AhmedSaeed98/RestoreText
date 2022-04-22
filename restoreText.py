@@ -9,7 +9,7 @@ text = 'ineedashoppingcart'
     isValid a function gets a text and validate wether it is found in list of keys or not
 """
 def isValid(text):
-    keys = ['i','like','books','in','the','shop','need','shopping','cart','a','shop','ping']
+    keys = ['i','like','books','in','the','shop','need','shopping','cart','a','shop']
     if text in keys:
         return 1
     else:
@@ -30,6 +30,8 @@ def restore(idx, cur_word):
         return
  
     cur_word += text[idx]
+
+    restore(idx + 1, cur_word)
  
     if(isValid(cur_word)):
         prevSentence = prevValidSentence
@@ -38,9 +40,6 @@ def restore(idx, cur_word):
         restore(idx + 1, "")
  
         prevValidSentence = prevSentence
-    
-    restore(idx + 1, cur_word)
- 
  
  
 def main():
